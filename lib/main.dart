@@ -46,7 +46,6 @@ class SSEClientPage2 extends StatefulWidget {
   @override
   _SSEClientPage2State createState() => _SSEClientPage2State();
 }
-
 class _SSEClientPage2State extends State<SSEClientPage2> {
   int count = 0;
   int _status = 0;
@@ -58,16 +57,16 @@ class _SSEClientPage2State extends State<SSEClientPage2> {
   void initState() {
     super.initState();
     initBackgroundFetch();
-    // _sseManager = SSEManager(
-    //   serverUrl: 'http://192.168.1.42:3000/events',
-    //   onDataReceived: _handleSSEEvent,
-    // );
-    // _sseManager.connectToServer();
+    _sseManager = SSEManager(
+      serverUrl: 'http://192.168.1.60:3000/events',
+      onDataReceived: handleSSEEvent,
+    );
+    _sseManager.connectToServer();
   }
   void initBackgroundFetch() async {
     BackgroundFetch.configure(
         BackgroundFetchConfig(
-          minimumFetchInterval: 1, // Minimum fetch interval (in minutes)
+          minimumFetchInterval: 15, // Minimum fetch interval (in minutes)
           stopOnTerminate: false, // Keep running even when app is terminated
           enableHeadless: true, // Enable headless mode for background execution
           startOnBoot: true, // Start background fetch on device boot
@@ -75,7 +74,7 @@ class _SSEClientPage2State extends State<SSEClientPage2> {
         ),
             (String taskId) async {
               _sseManager = SSEManager(
-                serverUrl: 'http://192.168.1.42:3000/events',
+                serverUrl: 'http://192.168.1.60:3000/events',
                 onDataReceived: handleSSEEvent,
               );
               _sseManager.connectToServer();
